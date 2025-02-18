@@ -1,5 +1,6 @@
 package org.example.services;
 
+import org.example.exceptions.ControlPanelException;
 import org.example.exceptions.ScoreBoardException;
 import org.example.models.Game;
 import org.example.models.Team;
@@ -28,7 +29,7 @@ public class ControlPanel {
                 case 1 -> {
                     try {
                         if(currentGame != null) {
-                            throw new RuntimeException("Finish the current game to start a new one");
+                            throw new ControlPanelException("Finish the current game to start a new one");
                         }
                         System.out.print("Enter home team: ");
                         Team homeTeam = new Team(scanner.nextLine());
