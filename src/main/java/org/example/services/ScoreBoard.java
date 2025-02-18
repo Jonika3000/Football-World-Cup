@@ -1,6 +1,7 @@
 package org.example.services;
 
-import org.example.exception.ScoreBoardException;
+import org.example.exceptions.ScoreBoardException;
+import org.example.helpers.Validator;
 import org.example.models.Game;
 import org.example.models.Team;
 
@@ -24,7 +25,7 @@ public class ScoreBoard {
                         && gameFilter.getHomeTeam().equals(game.getHomeTeam()))
                 .findFirst()
                 .orElseThrow(() -> new ScoreBoardException("Game not found"));
-        if(validScore(scoreHomeTeam) || validScore(scoreAwayTeam)) {
+        if(Validator.validScore(scoreHomeTeam) || Validator.validScore(scoreAwayTeam)) {
             throw new ScoreBoardException("Invalid score");
         }
         var updatedHomeScore = updatedGame.getHomeScore()+scoreHomeTeam;
@@ -35,9 +36,6 @@ public class ScoreBoard {
         return updatedGame;
     }
 
-    private boolean validScore (int score) {
-        return score < 0;
-    }
 
     public ArrayList<Game> getSummary () {
         return games;

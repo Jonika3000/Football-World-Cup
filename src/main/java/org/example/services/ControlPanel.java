@@ -1,6 +1,6 @@
 package org.example.services;
 
-import org.example.exception.ScoreBoardException;
+import org.example.exceptions.ScoreBoardException;
 import org.example.models.Game;
 import org.example.models.Team;
 
@@ -26,13 +26,13 @@ public class ControlPanel {
 
             switch (choice) {
                 case 1 -> {
-                    System.out.print("Enter home team: ");
-                    Team homeTeam = new Team(scanner.nextLine());
-                    System.out.print("Enter away team: ");
-                    Team awayTeam = new Team(scanner.nextLine());
                     try {
+                        System.out.print("Enter home team: ");
+                        Team homeTeam = new Team(scanner.nextLine());
+                        System.out.print("Enter away team: ");
+                        Team awayTeam = new Team(scanner.nextLine());
                         currentGame = scoreBoard.startNewGame(homeTeam, awayTeam);
-                    } catch (ScoreBoardException e) {
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }

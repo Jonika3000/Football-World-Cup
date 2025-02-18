@@ -1,6 +1,5 @@
 package org.example;
 
-import org.example.exception.ScoreBoardException;
 import org.example.services.ControlPanel;
 
 public class Main {
