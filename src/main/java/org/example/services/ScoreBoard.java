@@ -17,4 +17,29 @@ public class ScoreBoard {
         games.add(game);
         return game;
     }
+
+    public Game updateGameScore (Game game, int scoreHomeTeam, int scoreAwayTeam) throws ScoreBoardException {
+        var updatedGame = games.stream()
+                .filter(gameFilter -> gameFilter.getAwayTeam().equals(game.getAwayTeam())
+                        && gameFilter.getHomeTeam().equals(game.getHomeTeam()))
+                .findFirst()
+                .orElseThrow(() -> new ScoreBoardException("Game not found"));
+        if(validScore(scoreHomeTeam) || validScore(scoreAwayTeam)) {
+            throw new ScoreBoardException("Invalid score");
+        }
+        var updatedHomeScore = updatedGame.getHomeScore()+scoreHomeTeam;
+        var updatedAwayScore = updatedGame.getAwayScore()+scoreAwayTeam;
+        updatedGame.setHomeScore(updatedHomeScore);
+        updatedGame.setAwayScore(updatedAwayScore);
+
+        return updatedGame;
+    }
+
+    private boolean validScore (int score) {
+        return score < 0;
+    }
+
+    public ArrayList<Game> getSummary () {
+        return games;
+    }
 }

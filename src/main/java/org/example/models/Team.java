@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Team {
-    public String name;
+    private String name;
 
     public Team(String name) {
         Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
@@ -13,6 +13,14 @@ public class Team {
 
         if (isSpecialChar)
             throw new RuntimeException("Team name cannot contain special character");
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 }
