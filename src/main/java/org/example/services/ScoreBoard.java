@@ -6,6 +6,7 @@ import org.example.models.Game;
 import org.example.models.Team;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ScoreBoard {
     private ArrayList<Game> games = new ArrayList<>();
@@ -37,7 +38,15 @@ public class ScoreBoard {
     }
 
 
-    public ArrayList<Game> getSummary () {
-        return games;
+    public List<Game> getSummary () {
+        return games.stream()
+                .sorted((g1, g2) -> {
+                    int scoreComparison = Integer.compare(g2.getTotalScore(), g1.getTotalScore());
+                    if (scoreComparison == 0) {
+                        return Long.compare(g2.getTimestamp(), g1.getTimestamp());
+                    }
+                    return scoreComparison;
+                })
+                .toList();
     }
 }

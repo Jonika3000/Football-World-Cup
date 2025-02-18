@@ -27,6 +27,9 @@ public class ControlPanel {
             switch (choice) {
                 case 1 -> {
                     try {
+                        if(currentGame != null) {
+                            throw new RuntimeException("Finish the current game to start a new one");
+                        }
                         System.out.print("Enter home team: ");
                         Team homeTeam = new Team(scanner.nextLine());
                         System.out.print("Enter away team: ");

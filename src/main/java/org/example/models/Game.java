@@ -5,10 +5,12 @@ public class Game {
     private Team awayTeam;
     private int homeScore = 0;
     private int awayScore = 0;
+    private final long timestamp;
 
     public Game(Team homeTeam, Team awayTeam) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
+        this.timestamp = System.currentTimeMillis();
     }
 
     public Team getHomeTeam() {
@@ -45,6 +47,14 @@ public class Game {
 
     @Override
     public String toString() {
-        return  homeTeam.getName() + " " + awayTeam.getName() + ": " + homeScore + " " + awayScore;
+        return  homeTeam.getName() + " - " + awayTeam.getName() + ": " + homeScore + " " + awayScore;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public int getTotalScore() {
+        return homeScore + awayScore;
     }
 }
