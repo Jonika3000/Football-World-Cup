@@ -47,7 +47,7 @@ public class Game {
 
     @Override
     public String toString() {
-        return  homeTeam.getName() + " - " + awayTeam.getName() + ": " + homeScore + " " + awayScore;
+        return String.format("%s - %s: %d %d", homeTeam.getName(), awayTeam.getName(), homeScore, awayScore);
     }
 
     public long getTimestamp() {

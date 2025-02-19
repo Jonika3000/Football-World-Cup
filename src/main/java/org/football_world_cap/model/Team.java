@@ -1,11 +1,9 @@
 package org.football_world_cap.model;
 
-import org.football_world_cap.validator.Validator;
-
 public class Team {
     private String name;
 
-    public Team(String name) throws Exception {
+    public Team(String name) {
         setName(name);
     }
 
@@ -13,9 +11,7 @@ public class Team {
         return name;
     }
 
-    public void setName(String name) throws Exception {
-        if(!Validator.validName(name))
-            throw new IllegalArgumentException("Name cannot contain special characters");
+    public void setName(String name) {
         this.name = name;
     }
 }

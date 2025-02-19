@@ -14,37 +14,23 @@ public class ControlPanelService {
         Game currentGame = null;
 
         while (true) {
-            System.out.println("\nFootball Scoreboard Menu:");
-            System.out.println("1. Start New Game");
-            System.out.println("2. Update Score");
-            System.out.println("3. Finish Game");
-            System.out.println("4. Show Summary");
-            System.out.println("5. Exit");
-            System.out.print("Enter your choice: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
+            int choice = OutputService.printMenu(scanner);
             switch (choice) {
                 case 1 -> {
                     try {
                         if(currentGame != null) {
                             throw new ControlPanelException("Finish the current game to start a new one");
                         }
-                        System.out.print("Enter home team: ");
-                        Team homeTeam = new Team(scanner.nextLine());
-                        System.out.print("Enter away team: ");
-                        Team awayTeam = new Team(scanner.nextLine());
+                        Team homeTeam = OutputService.menuCreateTeam(scanner, "home");
+                        Team awayTeam = OutputService.menuCreateTeam(scanner, "away");
                         currentGame = scoreBoard.startNewGame(homeTeam, awayTeam);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
                 }
                 case 2 -> {
-                    System.out.print("Enter how much add to home team score: ");
-                    int homeScore = scanner.nextInt();
-                    System.out.print("Enter how much add to away team score: ");
-                    int awayScore = scanner.nextInt();
+                    int homeScore = OutputService.menuAddScore(scanner, "home");
+                    int awayScore = OutputService.menuAddScore(scanner, "away");
                     scanner.nextLine();
                     try {
                         currentGame = scoreBoard.updateGameScore(currentGame, homeScore, awayScore);
