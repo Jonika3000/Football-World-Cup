@@ -1,13 +1,14 @@
 package org.football_world_cap.service;
 
 import org.football_world_cap.exception.ControlPanelException;
+import org.football_world_cap.exception.ScoreBoardException;
 import org.football_world_cap.model.Team;
 import org.football_world_cap.validator.Validator;
 
 import java.util.Scanner;
 
 public class OutputService {
-    public static int printMenu (Scanner scanner) {
+    public static String printMenu (Scanner scanner) {
         System.out.println("\nFootball Scoreboard Menu:");
         System.out.println("1. Start New Game");
         System.out.println("2. Update Score");
@@ -16,10 +17,7 @@ public class OutputService {
         System.out.println("5. Exit");
         System.out.print("Enter your choice: ");
 
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-
-        return choice;
+        return scanner.nextLine();
     }
 
     public static Team menuCreateTeam (Scanner scanner, String team) throws ControlPanelException {

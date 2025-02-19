@@ -1,36 +1,35 @@
 package org.football_world_cap.service;
 
 import org.football_world_cap.exception.ScoreBoardException;
-import org.football_world_cap.model.Team;
 
 import java.util.Scanner;
 
 public class ControlPanelService {
     private GameStorageService gameStorage = null;
     private ScoreBoardService scoreBoard = null;
-    private Scanner scanner = null;
 
     public void play () {
         gameStorage = new GameStorageService();
         scoreBoard = new ScoreBoardService();
-        scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            int choice = OutputService.printMenu(scanner);
+            String choice = OutputService.printMenu(scanner);
+
             switch (choice) {
-                case 1 -> {
+                case "1" -> {
                     startGameAction();
                 }
-                case 2 -> {
+                case "2" -> {
                     updateScoreAction();
                 }
-                case 3 -> {
+                case "3" -> {
                     finishGameAction();
                 }
-                case 4 -> {
+                case "4" -> {
                     showSummaryAction();
                 }
-                case 5 -> {
+                case "5" -> {
                     System.out.println("Exiting...");
                     scanner.close();
                     return;
@@ -42,29 +41,24 @@ public class ControlPanelService {
 
     private void startGameAction () {
         try {
-            Team homeTeam = OutputService.menuCreateTeam(scanner, "home");
-            Team awayTeam = OutputService.menuCreateTeam(scanner, "away");
-            scoreBoard.startNewGame(homeTeam, awayTeam);
+            scoreBoard.startNewGame();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void updateScoreAction () {
-        int homeScore = OutputService.menuAddScore(scanner, "home");
-        int awayScore = OutputService.menuAddScore(scanner, "away");
-        scanner.nextLine();
         try {
-            scoreBoard.updateGameScore(homeScore, awayScore);
+            scoreBoard.updateGameScore();
         } catch (ScoreBoardException e) {
             System.out.println(e.getMessage());
         }
     }
 
     private void finishGameAction () {
-        System.out.print("Game will be finished.");
         try {
             scoreBoard.finishGame(gameStorage);
+            System.out.print("Game will be finished.");
         } catch (ScoreBoardException e) {
             System.out.println(e.getMessage());
         }
