@@ -2,8 +2,6 @@ package org.football_world_cap.service;
 
 import org.football_world_cap.exception.ScoreBoardException;
 
-import java.util.Scanner;
-
 public class ControlPanelService {
     private GameStorageService gameStorage = null;
     private ScoreBoardService scoreBoard = null;
