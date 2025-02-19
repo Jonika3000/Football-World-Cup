@@ -1,4 +1,4 @@
-package org.example.helpers;
+package org.football_world_cap.validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

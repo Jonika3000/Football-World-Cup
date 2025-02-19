@@ -1,4 +1,4 @@
-package org.example.exceptions;
+package org.football_world_cap.exception;
 
 public class ScoreBoardException extends Exception{
     public ScoreBoardException(String message) {

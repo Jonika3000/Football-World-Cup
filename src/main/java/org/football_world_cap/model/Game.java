@@ -1,4 +1,4 @@
-package org.example.models;
+package org.football_world_cap.model;
 
 public class Game {
     private Team homeTeam;

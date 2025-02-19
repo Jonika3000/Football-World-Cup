@@ -1,15 +1,15 @@
-package org.example.services;
+package org.football_world_cap.service;
 
-import org.example.exceptions.ControlPanelException;
-import org.example.exceptions.ScoreBoardException;
-import org.example.models.Game;
-import org.example.models.Team;
+import org.football_world_cap.exception.ControlPanelException;
+import org.football_world_cap.exception.ScoreBoardException;
+import org.football_world_cap.model.Game;
+import org.football_world_cap.model.Team;
 
 import java.util.Scanner;
 
-public class ControlPanel {
+public class ControlPanelService {
     public static void play () {
-        ScoreBoard scoreBoard = new ScoreBoard();
+        ScoreBoardService scoreBoard = new ScoreBoardService();
         Scanner scanner = new Scanner(System.in);
         Game currentGame = null;
 

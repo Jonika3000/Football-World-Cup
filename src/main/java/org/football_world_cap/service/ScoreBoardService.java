@@ -1,14 +1,14 @@
-package org.example.services;
+package org.football_world_cap.service;
 
-import org.example.exceptions.ScoreBoardException;
-import org.example.helpers.Validator;
-import org.example.models.Game;
-import org.example.models.Team;
+import org.football_world_cap.exception.ScoreBoardException;
+import org.football_world_cap.validator.Validator;
+import org.football_world_cap.model.Game;
+import org.football_world_cap.model.Team;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreBoard {
+public class ScoreBoardService {
     private ArrayList<Game> games = new ArrayList<>();
 
     public Game startNewGame (Team homeTeam, Team awayTeam) throws ScoreBoardException {

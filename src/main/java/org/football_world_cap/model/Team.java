@@ -1,9 +1,6 @@
-package org.example.models;
+package org.football_world_cap.model;
 
-import org.example.helpers.Validator;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.football_world_cap.validator.Validator;
 
 public class Team {
     private String name;
