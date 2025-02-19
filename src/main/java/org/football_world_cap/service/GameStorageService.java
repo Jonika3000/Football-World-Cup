@@ -5,7 +5,7 @@ import org.football_world_cap.model.Game;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameStorage {
+public class GameStorageService {
     private List<Game> finishedGames = new ArrayList<>();
 
     public void addFinishedGame(Game game) {

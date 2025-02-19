@@ -6,44 +6,29 @@ import org.football_world_cap.model.Team;
 import java.util.Scanner;
 
 public class ControlPanelService {
-    public static void play () {
-        GameStorage gameStorage = new GameStorage();
-        ScoreBoardService scoreBoard = new ScoreBoardService();
-        Scanner scanner = new Scanner(System.in);
+    private GameStorageService gameStorage = null;
+    private ScoreBoardService scoreBoard = null;
+    private Scanner scanner = null;
+
+    public void play () {
+        gameStorage = new GameStorageService();
+        scoreBoard = new ScoreBoardService();
+        scanner = new Scanner(System.in);
 
         while (true) {
             int choice = OutputService.printMenu(scanner);
             switch (choice) {
                 case 1 -> {
-                    try {
-                        Team homeTeam = OutputService.menuCreateTeam(scanner, "home");
-                        Team awayTeam = OutputService.menuCreateTeam(scanner, "away");
-                        scoreBoard.startNewGame(homeTeam, awayTeam);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
+                    startGameAction();
                 }
                 case 2 -> {
-                    int homeScore = OutputService.menuAddScore(scanner, "home");
-                    int awayScore = OutputService.menuAddScore(scanner, "away");
-                    scanner.nextLine();
-                    try {
-                        scoreBoard.updateGameScore(homeScore, awayScore);
-                    } catch (ScoreBoardException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    updateScoreAction();
                 }
                 case 3 -> {
-                    System.out.print("Game will be finished.");
-                    try {
-                        scoreBoard.finishGame(gameStorage);
-                    } catch (ScoreBoardException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    finishGameAction();
                 }
                 case 4 -> {
-                    System.out.println("\nGame Summary:");
-                    gameStorage.getSummary().forEach(System.out::println);
+                    showSummaryAction();
                 }
                 case 5 -> {
                     System.out.println("Exiting...");
@@ -53,5 +38,40 @@ public class ControlPanelService {
                 default -> System.out.println("Invalid choice. Please try again.");
             }
         }
+    }
+
+    private void startGameAction () {
+        try {
+            Team homeTeam = OutputService.menuCreateTeam(scanner, "home");
+            Team awayTeam = OutputService.menuCreateTeam(scanner, "away");
+            scoreBoard.startNewGame(homeTeam, awayTeam);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void updateScoreAction () {
+        int homeScore = OutputService.menuAddScore(scanner, "home");
+        int awayScore = OutputService.menuAddScore(scanner, "away");
+        scanner.nextLine();
+        try {
+            scoreBoard.updateGameScore(homeScore, awayScore);
+        } catch (ScoreBoardException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void finishGameAction () {
+        System.out.print("Game will be finished.");
+        try {
+            scoreBoard.finishGame(gameStorage);
+        } catch (ScoreBoardException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void showSummaryAction () {
+        System.out.println("\nGame Summary:");
+        gameStorage.getSummary().forEach(System.out::println);
     }
 }

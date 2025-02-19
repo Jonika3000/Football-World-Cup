@@ -26,7 +26,7 @@ public class ScoreBoardService {
         activeGame.setAwayScore(activeGame.getAwayScore() + scoreAwayTeam);
     }
 
-    public void finishGame(GameStorage storage) throws ScoreBoardException {
+    public void finishGame(GameStorageService storage) throws ScoreBoardException {
         if (null == activeGame) throw new ScoreBoardException("Game not found");
         storage.addFinishedGame(activeGame);
         activeGame = null;
