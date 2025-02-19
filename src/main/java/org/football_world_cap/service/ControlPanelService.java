@@ -11,10 +11,9 @@ public class ControlPanelService {
     public void play () {
         gameStorage = new GameStorageService();
         scoreBoard = new ScoreBoardService();
-        Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            String choice = OutputService.printMenu(scanner);
+            String choice = InputService.printMenu();
 
             switch (choice) {
                 case "1" -> {
@@ -31,7 +30,6 @@ public class ControlPanelService {
                 }
                 case "5" -> {
                     System.out.println("Exiting...");
-                    scanner.close();
                     return;
                 }
                 default -> System.out.println("Invalid choice. Please try again.");

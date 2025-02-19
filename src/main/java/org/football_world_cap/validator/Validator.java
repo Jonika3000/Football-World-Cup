@@ -8,7 +8,7 @@ public class Validator {
         return score < 0;
     }
 
-    public static boolean validName (String name) {
+    public static boolean isValidName (String name) {
         if (name == null || name.trim().isEmpty()) {
             return false;
         }
