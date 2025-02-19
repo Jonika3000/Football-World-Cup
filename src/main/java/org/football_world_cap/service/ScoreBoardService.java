@@ -1,52 +1,34 @@
 package org.football_world_cap.service;
 
+import org.football_world_cap.exception.ControlPanelException;
 import org.football_world_cap.exception.ScoreBoardException;
 import org.football_world_cap.validator.Validator;
 import org.football_world_cap.model.Game;
 import org.football_world_cap.model.Team;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ScoreBoardService {
-    private ArrayList<Game> games = new ArrayList<>();
+    private Game activeGame = null;
 
-    public Game startNewGame (Team homeTeam, Team awayTeam) throws ScoreBoardException {
-        var game = new Game(homeTeam, awayTeam);
-        if (games.contains(game))
-            throw new ScoreBoardException("Game already exists");
-
-        games.add(game);
-        return game;
+    public void startNewGame (Team homeTeam, Team awayTeam) throws ControlPanelException {
+        if (null != activeGame) {
+            throw new ControlPanelException("Finish the current game to start a new one");
+        }
+        activeGame = new Game(homeTeam, awayTeam);
     }
 
-    public Game updateGameScore (Game game, int scoreHomeTeam, int scoreAwayTeam) throws ScoreBoardException {
-        var updatedGame = games.stream()
-                .filter(gameFilter -> gameFilter.getAwayTeam().equals(game.getAwayTeam())
-                        && gameFilter.getHomeTeam().equals(game.getHomeTeam()))
-                .findFirst()
-                .orElseThrow(() -> new ScoreBoardException("Game not found"));
+    public void updateGameScore (int scoreHomeTeam, int scoreAwayTeam) throws ScoreBoardException {
+        if (null == activeGame) throw new ScoreBoardException("No active game");
+
         if(Validator.validScore(scoreHomeTeam) || Validator.validScore(scoreAwayTeam)) {
             throw new ScoreBoardException("Invalid score");
         }
-        var updatedHomeScore = updatedGame.getHomeScore()+scoreHomeTeam;
-        var updatedAwayScore = updatedGame.getAwayScore()+scoreAwayTeam;
-        updatedGame.setHomeScore(updatedHomeScore);
-        updatedGame.setAwayScore(updatedAwayScore);
-
-        return updatedGame;
+        activeGame.setHomeScore(activeGame.getHomeScore() + scoreHomeTeam);
+        activeGame.setAwayScore(activeGame.getAwayScore() + scoreAwayTeam);
     }
 
-
-    public List<Game> getSummary () {
-        return games.stream()
-                .sorted((g1, g2) -> {
-                    int scoreComparison = Integer.compare(g2.getTotalScore(), g1.getTotalScore());
-                    if (scoreComparison == 0) {
-                        return Long.compare(g2.getTimestamp(), g1.getTimestamp());
-                    }
-                    return scoreComparison;
-                })
-                .toList();
+    public void finishGame(GameStorage storage) throws ScoreBoardException {
+        if (null == activeGame) throw new ScoreBoardException("Game not found");
+        storage.addFinishedGame(activeGame);
+        activeGame = null;
     }
 }
