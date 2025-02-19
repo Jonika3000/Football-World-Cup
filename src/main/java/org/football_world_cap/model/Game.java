@@ -1,4 +1,4 @@
-package org.example.models;
+package org.football_world_cap.model;
 
 public class Game {
     private Team homeTeam;
@@ -47,7 +47,7 @@ public class Game {
 
     @Override
     public String toString() {
-        return  homeTeam.getName() + " - " + awayTeam.getName() + ": " + homeScore + " " + awayScore;
+        return String.format("%s - %s: %d %d", homeTeam.getName(), awayTeam.getName(), homeScore, awayScore);
     }
 
     public long getTimestamp() {

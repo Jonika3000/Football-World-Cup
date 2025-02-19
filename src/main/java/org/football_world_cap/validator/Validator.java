@@ -1,4 +1,4 @@
-package org.example.helpers;
+package org.football_world_cap.validator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +9,9 @@ public class Validator {
     }
 
     public static boolean validName (String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return false;
+        }
         Pattern pattern = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher("I am a string");
 
