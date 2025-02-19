@@ -13,8 +13,8 @@ public class ScoreBoardService {
     private final Scanner scanner = new Scanner(System.in);
 
     public void startNewGame () throws ControlPanelException {
-        Team homeTeam = OutputService.menuCreateTeam(scanner, "home");
-        Team awayTeam = OutputService.menuCreateTeam(scanner, "away");
+        Team homeTeam = InputService.menuCreateTeam("home");
+        Team awayTeam = InputService.menuCreateTeam("away");
         if (null != activeGame) {
             throw new ControlPanelException("Finish the current game to start a new one");
         }
@@ -22,19 +22,24 @@ public class ScoreBoardService {
     }
 
     public void updateGameScore () throws ScoreBoardException {
-        if (null == activeGame) throw new ScoreBoardException("No active game");
-        int scoreHomeTeam = OutputService.menuAddScore(scanner, "home");
-        int scoreAwayTeam = OutputService.menuAddScore(scanner, "away");
-        scanner.nextLine();
+        if (null == activeGame) {
+            throw new ScoreBoardException("No active game");
+        }
+        int scoreHomeTeam = InputService.menuAddScore("home");
+        int scoreAwayTeam = InputService.menuAddScore("away");
+
         if(Validator.validScore(scoreHomeTeam) || Validator.validScore(scoreAwayTeam)) {
             throw new ScoreBoardException("Invalid score");
         }
+
         activeGame.setHomeScore(activeGame.getHomeScore() + scoreHomeTeam);
         activeGame.setAwayScore(activeGame.getAwayScore() + scoreAwayTeam);
     }
 
     public void finishGame(GameStorageService storage) throws ScoreBoardException {
-        if (null == activeGame) throw new ScoreBoardException("Game not found");
+        if (null == activeGame) {
+            throw new ScoreBoardException("There are no active games.");
+        }
         storage.addFinishedGame(activeGame);
         activeGame = null;
     }
